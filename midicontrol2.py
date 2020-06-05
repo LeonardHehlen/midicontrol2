@@ -64,31 +64,69 @@ with serial.Serial(serialport, 115200, timeout=1) as ser:
         line = line.strip('\r')
         vals = (line.split(':'))
 
+        midicontrols = []
+        nb_elts = 0
+        with open("midisignals", "r+") as midisignal:
+            for line in midisignal:
+                line = line.strip('\n')
+                line = line.split(":")
+                for l in line:
+                    nb_elts += 1
+                    midicontrols.append(l)
+
+        i = 0
+
+        while i < nb_elts:
+            i+=1
+            midicontrols[i] = int(midicontrols[i])
+            i+=1
+
         if vals[0] == 'pot1':
             try:
                 vals[1] = int(vals[1])
-                midi_out.send_message([0xB0, 17, vals[1]])
-                print("pot1: ", vals[1], "1CC17")
+                midi_out.send_message([0xB0, midicontrols[1], vals[1]])
+                print("pot1: ", vals[1], "CC", midicontrols[1])
             except:
                 print("couldn't send message from pot1")
         if vals[0] == 'pot2':
             try:
                 vals[1] = int(vals[1])
-                midi_out.send_message([0xB0, 18, vals[1]])
-                print("pot2: ", vals[1], "1CC18")
+                midi_out.send_message([0xB0, midicontrols[3], vals[1]])
+                print("pot2: ", vals[1], "CC",  midicontrols[3])
             except:
                 print("couldn't send message from pot2")
         if vals[0] == 'pot3':
             try:
                 vals[1] = int(vals[1])
-                midi_out.send_message([0xB0, 19, vals[1]])
-                print("pot3: ", vals[1], "1CC19")
+                midi_out.send_message([0xB0, midicontrols[5], vals[1]])
+                print("pot3: ", vals[1], "CC",  midicontrols[5])
             except:
                 print("couldn't send message from pot3")
         if vals[0] == 'pot4':
             try:
                 vals[1] = int(vals[1])
-                midi_out.send_message([0xB0, 20, vals[1]])
-                print("pot4: ", vals[1], "1CC20")
+                midi_out.send_message([0xB0, midicontrols[7], vals[1]])
+                print("pot4: ", vals[1], "CC",  midicontrols[7])
             except:
                 print("couldn't send message from pot4")
+        if vals[0] == 'pot5':
+            try:
+                vals[1] = int(vals[1])
+                midi_out.send_message([0xB0, midicontrols[9], vals[1]])
+                print("pot5: ", vals[1], "CC",  midicontrols[9])
+            except:
+                print("couldn't send message from pot5")
+        if vals[0] == 'pot6':
+            try:
+                vals[1] = int(vals[1])
+                midi_out.send_message([0xB0, midicontrols[11], vals[1]])
+                print("pot6: ", vals[1], "CC",  midicontrols[11])
+            except:
+                print("couldn't send message from pot6")
+        if vals[0] == 'pot7':
+            try:
+                vals[1] = int(vals[1])
+                midi_out.send_message([0xB0, midicontrols[13], vals[1]])
+                print("pot7: ", vals[1], "CC",  midicontrols[13])
+            except:
+                print("couldn't send message from pot7")
